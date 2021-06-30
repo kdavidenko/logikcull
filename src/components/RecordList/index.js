@@ -54,7 +54,6 @@ function RecordList() {
     } else {
       albumToAdd.artist.id = existingArtistId;
     }
-    console.log(albumToAdd)
     let set = [...fullCollection];
     set.push(albumToAdd)
     setFullCollection(set);
@@ -74,7 +73,6 @@ function RecordList() {
     if (newAlbum.artist.name !== oldAlbum.artist.name) {
       for (let i = 0; i < set.length; i++) {
         if(newAlbum.artist.id === set[i].artist.id){
-          console.log(set[i])
           set[i].artist.name = newAlbum.artist.name;
         }
       }
@@ -125,6 +123,11 @@ function RecordList() {
         <div className="mt-2">No results for that search</div>
       }
 
+      <Pagination
+        perPage={itemsPerPage}
+        total={currentCollection.length}
+        paginate={paginate}
+      />
     </div>
   );
 }
