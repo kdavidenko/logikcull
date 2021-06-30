@@ -11,7 +11,7 @@ function RecordList() {
   const [criteria, setCriteria] = useState("");
 
   const [page, setPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
 
   function curateList(){
     if (criteria.length > 0) {
@@ -62,15 +62,23 @@ function RecordList() {
 
   function removeAlbum(albumToBeRemoved) {
     let set = [...fullCollection];
-    const index = fullCollection.findIndex((el) =>JSON.stringify(el) === JSON.stringify(albumToBeRemoved));
+    const index = set.findIndex((el) =>JSON.stringify(el) === JSON.stringify(albumToBeRemoved));
     set.splice(index, 1)
     setFullCollection(set);
   };
 
   function updateAlbum(newAlbum, oldAlbum){
     let set = [...fullCollection];
-    const index = fullCollection.findIndex((el) =>JSON.stringify(el) === JSON.stringify(oldAlbum));
+    const index = set.findIndex((el) =>JSON.stringify(el) === JSON.stringify(oldAlbum));
     set[index] = newAlbum;
+    if (newAlbum.artist.name !== oldAlbum.artist.name) {
+      for (let i = 0; i < set.length; i++) {
+        if(newAlbum.artist.id === set[i].artist.id){
+          console.log(set[i])
+          set[i].artist.name = newAlbum.artist.name;
+        }
+      }
+    }
     setFullCollection(set);
   };
 
@@ -89,6 +97,11 @@ function RecordList() {
     <div>
       <SearchRecords criteria={criteria} setCriteria={setCriteria} />
       <AddRecordModal addAlbum={(albumToAdd) => addAlbum(albumToAdd)} />
+      <select value={itemsPerPage} onChange={(e)=>setItemsPerPage(e.target.value)}>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25">25</option>
+      </select>
       <Pagination
         perPage={itemsPerPage}
         total={currentCollection.length}
