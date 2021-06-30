@@ -18,17 +18,25 @@ function RecordList() {
         return album.album_title.toLowerCase().includes(criteria);
       });
       setCurrentCollection(current);
+      setPage(1);
     } else {
       setCurrentCollection(fullCollection);
+      setPage(1);
     }
   }
+
+  function removeAlbum(albumToBeRemoved) {
+    let set = [...fullCollection];
+    const index = fullCollection.findIndex((el) =>JSON.stringify(el) === JSON.stringify(albumToBeRemoved));
+    set.splice(index, 1)
+    setFullCollection(set);
+  };
 
   function updateAlbum(newAlbum, oldAlbum){
     let set = [...fullCollection];
     const index = fullCollection.findIndex((el) =>JSON.stringify(el) === JSON.stringify(oldAlbum));
     set[index] = newAlbum;
     setFullCollection(set);
-    setPage(1);
   };
 
   const paginate = (num) => setPage(num);
@@ -61,6 +69,7 @@ function RecordList() {
               condition={album.condition}
               artist={album.artist}
               updateAlbum={updateAlbum}
+              removeAlbum={removeAlbum}
             />
           )
         })

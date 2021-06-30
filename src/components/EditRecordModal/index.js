@@ -47,11 +47,11 @@ function EditRecordModal(props) {
     
   return (
     <>
-    <Button variant="primary" onClick={handleShow}>
+    <Button variant="primary" size="sm" className="m-2" onClick={handleShow}>
         Edit
     </Button>
 
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} animation={false}onHide={handleClose}>
     <Modal.Header closeButton>
         <Modal.Title>Editing</Modal.Title>
     </Modal.Header>
@@ -68,7 +68,7 @@ function EditRecordModal(props) {
     </Modal.Body>
 
     <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>Close</Button>
+        <Button variant="outline-secondary" onClick={handleClose}>Close</Button>
         <Button variant="primary" onClick={submitForm}>Save changes</Button>
     </Modal.Footer>
     </Modal>
