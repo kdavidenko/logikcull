@@ -28,7 +28,7 @@ function RecordList() {
     const index = fullCollection.findIndex((el) =>JSON.stringify(el) === JSON.stringify(oldAlbum));
     set[index] = newAlbum;
     setFullCollection(set);
-    setPage(0)
+    setPage(1);
   };
 
   const paginate = (num) => setPage(num);
