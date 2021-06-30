@@ -13,7 +13,7 @@ function RecordList() {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
 
-  function curateList(){
+  function curateList() {
     if (criteria.length > 0) {
       const current = fullCollection.filter((album) => {
         return album.album_title.toLowerCase().includes(criteria);
@@ -26,13 +26,13 @@ function RecordList() {
     }
   };
 
-  function findArtistId(artist){
+  function findArtistId(artist) {
     const index = fullCollection.findIndex((el) => el.artist.name.toLowerCase() === artist.toLowerCase());
     const artistId = index;
     return artistId;
   };
 
-  function findLastArtistId(){
+  function findLastArtistId() {
     let set = [];
     let ret;
 
@@ -87,8 +87,8 @@ function RecordList() {
   }, [criteria]);
 
   useEffect(() => {
-    curateList();
     localStorage.setItem('collection', JSON.stringify(fullCollection));
+    curateList();
   }, [fullCollection])
 
   const indexOfLastAlbum = page * itemsPerPage;

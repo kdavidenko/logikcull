@@ -1,5 +1,4 @@
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import EditRecordModal from '../../../EditRecordModal'
 import RemoveRecordModal from '../../../RemoveRecordModal'
 function RecordCard(props) {
