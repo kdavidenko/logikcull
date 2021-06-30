@@ -83,9 +83,13 @@ function RecordList() {
   const paginate = (num) => setPage(num);
 
   useEffect(() => {
-    return curateList();
-  }, [criteria, fullCollection]);
+    curateList();
+  }, [criteria]);
 
+  useEffect(() => {
+    curateList();
+    localStorage.setItem('collection', JSON.stringify(fullCollection));
+  }, [fullCollection])
 
   const indexOfLastAlbum = page * itemsPerPage;
   const indexOfFirstAlbum = indexOfLastAlbum - itemsPerPage;
