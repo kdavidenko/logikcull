@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchRecords from './components/SearchRecords';
 import Pagination from './components/Pagination';
 import RecordCard from './components/RecordCard';
+import AddRecordModal from '../AddRecordModal';
 
 function RecordList() {
 
@@ -23,7 +24,41 @@ function RecordList() {
       setCurrentCollection(fullCollection);
       setPage(1);
     }
-  }
+  };
+
+  function findArtistId(artist){
+    const index = fullCollection.findIndex((el) => el.artist.name.toLowerCase() === artist.toLowerCase());
+    const artistId = index;
+    return artistId;
+  };
+
+  function findLastArtistId(){
+    let set = [];
+    let ret;
+
+    for (let i = 0; i < fullCollection.length; i++) {
+      set.push(fullCollection[i].artist.id);
+    }
+    ret = set.sort((a, b) => b - a);
+
+    return ret[0];
+  };
+
+  function addAlbum(albumToAdd) {
+    // check if the artist already exists
+    const existingArtistId = findArtistId(albumToAdd.artist.name);
+    // If they do, use that ID
+    // if they don't add a new ID
+    if (existingArtistId === -1) {
+      albumToAdd.artist.id = findLastArtistId() + 1;
+    } else {
+      albumToAdd.artist.id = existingArtistId;
+    }
+    console.log(albumToAdd)
+    let set = [...fullCollection];
+    set.push(albumToAdd)
+    setFullCollection(set);
+  };
 
   function removeAlbum(albumToBeRemoved) {
     let set = [...fullCollection];
@@ -53,7 +88,7 @@ function RecordList() {
   return (
     <div>
       <SearchRecords criteria={criteria} setCriteria={setCriteria} />
-      <div>Total Albums Displayed: {currentCollection.length}</div>
+      <AddRecordModal addAlbum={(albumToAdd) => addAlbum(albumToAdd)} />
       <Pagination
         perPage={itemsPerPage}
         total={currentCollection.length}
